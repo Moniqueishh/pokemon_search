@@ -3,6 +3,8 @@ from app import app
 
 from flask import render_template, request, url_for, redirect
 from .forms import pSearch
+import requests, json
+
 
 
 @app.route('/')
@@ -15,7 +17,7 @@ def searchPage():
     if request.method == "POST":
         if form.validate():
             pokemonName = form.pokemonName.data
-            # print(pokemonName)
+            print(pokemonName)
             # return redirect(url_for("homePage"))
             
             url = f'https://pokeapi.co/api/v2/pokemon/{pokemonName}'
@@ -30,7 +32,9 @@ def searchPage():
                 pokemon_dict["Base ATK"] = my_dict["stats"][1]["base_stat"]
                 pokemon_dict["Base HP"] = my_dict["stats"][0]["base_stat"]
                 pokemon_dict["Base DEF"] = my_dict["stats"][2]["base_stat"]
-                return pokemon_dict
+                return render_template("search_results.html", form = form, pokemon_dict = pokemon_dict)
+
+
             else:
                 return "The pokemon you're looking for does not exist."
 

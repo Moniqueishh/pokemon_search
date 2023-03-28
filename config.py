@@ -1,5 +1,4 @@
 import os
-import requests, json
 
 basedir = os.path.abspath(os.path.dirname(__name__))
 
